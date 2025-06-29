@@ -44,6 +44,7 @@ await buildStylesheets(['css/main.css'], buildEnvironment);
 
 await buildEnvironment.copyRootFile('node_modules/highlight.js/styles/a11y-dark.css', 'css/code/dark.css');
 await buildEnvironment.copyRootFile('node_modules/highlight.js/styles/a11y-light.css', 'css/code/light.css');
+await buildEnvironment.copyRootFile('CNAME', 'CNAME');
 
 let pages = [];
 for (const filePath of await getHtmlFiles(buildEnvironment.sourcePath('notes/'))) {
