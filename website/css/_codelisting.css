@@ -1,6 +1,8 @@
 .code {
     border: 1px solid var(--border-color);
     margin: 1em 0;
+    overflow: hidden;
+    container-type: inline-size;
 
     .header {
         display: flex;
@@ -15,9 +17,10 @@
         }
     }
 
-    pre {
+    pre,code {
         padding: var(--space-1);
         font-family: var(--font-monospace-code);
+        overflow: auto;
     }
 
     button {
@@ -80,4 +83,13 @@ ul[role=menu] {
             border-bottom-right-radius: 0.25em;
         }
     }
+}
+
+p code {
+    background-color: var(--background-secondary);
+    font-family: var(--font-monospace-code);
+    padding: 0.25em;
+    border-radius: 0.25em;
+    hyphens: none;
+    word-break:  break-word;
 }

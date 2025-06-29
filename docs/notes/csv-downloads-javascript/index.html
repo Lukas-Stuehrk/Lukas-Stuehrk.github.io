@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to create a downloadable CSV file from JavaScript. This is handy when building small tools or bookmarklets.">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/code/light.css" media="(prefers-color-scheme: light)" class="code">
+    <link rel="stylesheet" href="../../css/code/dark.css" media="(prefers-color-scheme: dark)" class="code">
+    <title>Creating CSV downloads with JavaScript</title>
+</head>
+<body>
+<header>
+    <a href="#content" class="skip-link">Skip to Content</a>
+    <nav>
+        <ul>
+            <li>
+                <a href="../../" id="logo"><img src="../../wood.svg" alt="Lukas Stührk" title="Go to home page"></a>
+            </li>
+            <li>
+                <a href="../">Notes</a>
+            </li>
+            <li>
+                <a href="../../about.html">About</a>
+            </li>
+            <li>
+                <a href="../../glossary.html">Glossary</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content" class="h-entry">
+    <h1 class="p-name">Creating <abbr title="Comma-Separated Values, a file format to store tabular data">CSV</abbr> downloads with
+        JavaScript</h1>
+    <aside><p><strong>Published: </strong><time class="dt-published" datetime="2025-06-29">June 26, 2025</time></p><p><strong>Keywords: </strong><abbr title="HyperText Markup Language, the markup language used to author websites">HTML</abbr>, JavaScript, <abbr title="Comma-Separated Values, a file format to store tabular data.">CSV</abbr></p></aside>
+    <div>
+    <p><abbr title="Comma-Separated Values, a file format to store tabular data">CSV</abbr> files are a super useful
+        tool for exporting data.
+        They are a simple text-based format, and therefore easy to create, and are well-supported by a variety of tools,
+        including Microsoft Excel.
+        One use case that turned out to be particularly useful for me is to use CSV files when I
+        export data from web apps with <a href="https://en.wikipedia.org/wiki/Bookmarklet" title="The Wikipedia page that explains bookmarklets.">bookmarklets</a>.</p>
+
+    <p>To be able to export such data, I need to be able to create a downloadable CSV file with JavaScript and without
+        backend support.</p>
+    <h2 id="data-url">Building Block One: Data URLs</h2>
+    <p>The basic idea is pretty straightforward.
+        You can use a
+        <a href="https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data" title="The page that explains data URLs on the Mozilla Developer Network">data URL</a> to create the CSV
+        file.
+        A Data URL is a special type of URL that allows embedding small files or data directly into a link itself.
+        So you can build a data URL that looks like <code>data:text/csv,</code> followed by the contents of the
+        CSV file.
+    </p>
+
+    <p>The contents of the CSV file are very easy to create. CSV files are one record per line (so each table row is a
+        new line in the file). And the records are simply the fields separated by a delimiter.</p>
+
+    <p>So let's assume that we store the data in a two-dimensional array: It's an array of rows, and every row
+        contains another array that stores the fields of that row. Then a naive implementation of creating the file
+        contents looks like this:
+    </p>
+
+    
+            <div class="code">
+                <div class="header">
+                    <dl>
+                        <dt class="visually-hidden">Code language:</dt>
+                        <dd>javascript</dd>
+                    </dl>
+                    <ul role="menu">
+                        <li role="menuitem">
+                            <button>Copy to clipboard</button>
+                        </li>
+                    </ul>
+                </div>
+                <pre><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);</pre>
+        </div>
+        
+
+    <p>And because we are adding the file contents to a data URL, we need to make sure that the created string with the
+        file contents doesn't contain any characters that are not allowed in URls. Wrapping it in
+        <code>encodeURIComponent()</code> should do the job.</p>
+
+    <aside class="excursus" id="exc-edge-cases">
+        <p>Did I mention before that CSV is a simple file format? Sorry, I was blatantly lying. There are
+            plenty of edge cases when generating CSV files, and I recommend always using a dedicated library instead of
+            simply concatenating text. Not later than when you are reading CSV files, you should definitely use a
+            library proven in practice.</p>
+        <p>One example: In the code snippet above, I'm using semicolons (<code>;</code>) for the delimiter between
+            fields. This is the delimiter used in Europe. In english-speaking countries, usually a comma (<code>,</code>)
+            is used. But space and tabs are also valid delimiter.</p>
+    </aside>
+
+    <p>You can add such a data URL in the <code>href</code> attribute of an <code>a</code> element and you are almost
+        done. But if you do so, you'll notice that the downloaded file will have a very weird filename such
+        as <code>Nr26vr5U.csv</code> or <code>WZ9i2bwG.csv</code>.</p>
+
+    <h2 id="download-attribute">Building Block Two: Links with <code>download</code> attribute <a href="#download-attribute" title="Link to this section"></a></h2>
+    <p>To create a nice filename for the downloaded file, you need the second building block: The
+        <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download" title="The page that explains the download attribute on the Mozilla Developer Network">download attribute</a>.
+        It's
+        supported in <em>every</em> browser. If you set an <code>a</code>
+        element's <code>download</code> attribute with the contents of the desired filename, then the downloaded file
+        will have this filename.</p>
+
+    <h2 id="microsoft-bom">Microsoft Tools need the <abbr title="Byte Order Mark">BOM</abbr> for Unicode support <a href="#microsoft-bom"></a></h2>
+
+    <p>After building all of this, you can finally enjoy downloading your beautiful CSV files that have nice filenames.
+        But as soon as you open the downloaded files with Excel, you are up to the next surprise. Although you encoded
+        all your data perfectly fine, and even if you put the charset information in the resulting file, Excel will
+        display rubbish as soon as you include characters outside of ASCII in your CSV file.
+    </p>
+
+    <p>As it turns out, a lot of Microsoft Software including Excel needs a magic Unicode character to understand that
+        a file has UTF-8 contents. It's called the
+        <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="The page that explains the Byte Order Mark on Wikipedia">byte order mark
+            or
+            <abbr title="Byte Order Mark">BOM</abbr></a>.
+        If you put it at the beginning of the CSV file, Excel will understand that the file contains contents outside
+        the ASCII range and will display all characters correctly.
+    </p>
+
+    <h2 id="full-solution">The full solution</h2>
+    <p>Please note that the code for creating the raw file is not doing any escaping. This only works if you are in
+        control of the data, so you can ensure that the contents don't contain any data that needs escaping. Escaping
+        CSV data is a hard problem, and I strongly suggest that you choose an existing library that is proven in
+        practice
+        to create a CSV file.</p>
+    
+            <div class="code">
+                <div class="header">
+                    <dl>
+                        <dt class="visually-hidden">Code language:</dt>
+                        <dd>JavaScript</dd>
+                    </dl>
+                    <ul role="menu">
+                        <li role="menuitem">
+                            <button>Copy to clipboard</button>
+                        </li>
+                    </ul>
+                </div>
+                <pre><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);
+<span class="hljs-keyword">const</span> csvFile = <span class="hljs-string">"data:text/csv;charset=utf-8,\uFEFF"</span> + <span class="hljs-built_in">encodeURIComponent</span>(csv);
+<span class="hljs-keyword">const</span> link = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">"a"</span>);
+link.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">"href"</span>, csvFile);
+link.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">"download"</span>, <span class="hljs-string">"data.csv"</span>);
+<span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(link);
+link.<span class="hljs-title function_">remove</span>();
+</pre>
+        </div>
+        
+
+    <script src="../../js/code.js" async=""></script>
+</div>
+</main>
+<footer>
+    <ul>
+        <!--<li>Sitemap</li>-->
+        <li><a href="../../impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+
+</body></html>

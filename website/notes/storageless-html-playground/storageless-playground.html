@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description"
+          content="I built an HTML playground that doesn't store any data, yet it has shareable URLs.">
+    <meta name="keywords" content="HTML, playground, storage, Brotli">
+    <title>Experimenting with an HTML playground that doesn't have any storage</title>
+</head>
+<body>
+<header>
+    <h1>Experimenting with an <abbr
+            title="HyperText Markup Language, the markup language used to author websites">HTML</abbr> playground that
+        doesn't have any storage</h1>
+    <time class="dt-published" datetime="2025-06-29">June 29, 2025</time>
+</header>
+<main>
+    <p>I love using <abbr title="HyperText Markup Language, the markup language used to author websites">HTML</abbr>
+        playgrounds for quick experiments and to quickly explain things to someone via social media. And I think their
+        coolest feature is that they have shareable <abbr
+                title="Uniform Resource Locator,  the address of a website or another ressource on the internet">URLs</abbr>.
+    </p>
+    <p>And recently I experimented a lot with little tools that are static websites. They are handy because they are
+        super easy to deploy, and easy to maintain. And there are plenty of options to host static websites, so you can
+        provide them at nearly no cost or even for free.</p>
+    <h2 id="the-problem">The problem: Storage</h2>
+    <p>However, static websites come with one big disadvantage. They don't have any possibility to store data.</p>
+    <p>Static website hosting usually doesn't provide a way to run server-side software or to use a database, so you
+        can't store user-created content, which is the key requirement to have sharable URls for an HTML playground.</p>
+    <p>Or is it?</p>
+    <h2 id="the-idea">The idea: Brotli</h2>
+    <p><a href="https://en.wikipedia.org/wiki/Brotli">Brotli</a> is a lossless data compression algorithm that is great
+        for compressing HTML, JS, and CSS. So it's basically perfect to compress the contents of an HTML playground.</p>
+    <p>So what happens if we compress the playground's data good enough that we can put all of a playground's contents
+        in the URL itself? Then we wouldn't need any storage because the URL itself already contains all information to
+        display the playground.</p>
+    <p>And that's how <a href="https://playground.lukas.stuehrk.net">my playground was born</a>. Here's how it works:
+    </p>
+    <p>The playground works like a regular HTML playground where you can edit HTML, CSS, and JS. Whenever you change its
+        contents, a live preview is rendered as well. And whenever you edit the playground, its contents are compressed
+        via Brotli and put in the URL.</p>
+    <p>For example, here's how the playground with a hello world example looks like: <code><a
+            href="https://playground.lukas.stuehrk.net/#GzAAgBSh0hHmlvozhcqYrVicleiEDThwyMJIB8Aj1A6M6KXHvEqfXHOreML6wp5RhIsf">https://playground.&shy;lukas.&shy;stuehrk.net/&shy;#GzAAgBSh0hHmlvozhcqYrVicleiEDThwyMJIB8Aj1A6M6KXHvEqfXHOreML6wp5RhIsf</a></code>
+    </p>
+    <p>So when you then copy its URL and send it to someone else, they can restore the very same contents from the
+        information that is put in the URL.</p>
+    <p>Now, there are multiple ways how you could store the contents in the URL: In the path, a query parameter, or the
+        fragment. I chose the fragment because this provides one interesting side effect: The actual contents of the
+        playground are never sent to the server that hosts the website! They never leave your browser!</p>
+    <h2 id="disadvantages">Disadvantages</h2>
+    <p>However, this comes with one big disadvantage: you cannot change the playground's contents once that you've shared its URLs
+        with someone else. So if you accidentally included some sensitive data in the playground, there's no way to
+        remove it anymore.</p>
+</main>
+</body>
+</html>
