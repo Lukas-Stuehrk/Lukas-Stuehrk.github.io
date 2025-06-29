@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The homepage of Lukas Stührk's personal website">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Lukas Stührk's personal website</title>
+    <style>
+        #homepage-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-left: var(--space-1);
+            padding-right: var(--space-1);
+
+            > *:first-child {
+                flex-grow: 1;
+            }
+
+            > *:last-child {
+                flex-grow: 1;
+                flex-basis: calc(calc(40rem - 100%) * 999);
+            }
+        }
+
+        h1 {
+            line-height: 1;
+            text-wrap: balance;
+            max-width: 50vw;
+            min-width: 20ch;
+            font-size: inherit;
+            background: inherit;
+            color: currentColor;
+        }
+
+        body > main {
+            grid-template-columns: inherit;
+        }
+
+        @media (max-width: 1200px) {
+            #homepage-hero > *:first-child {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            #homepage-hero > *:first-child {
+                font-size: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="#content" class="skip-link">Skip to Content</a>
+    <nav>
+        <ul>
+            <li>
+                <a href="./" id="logo"><img src="wood.svg" alt="Lukas Stührk" title="Go to home page"></a>
+            </li>
+            <li>
+                <a href="./notes/">Notes</a>
+            </li>
+            <li>
+                <a href="./about.html">About</a>
+            </li>
+            <li>
+                <a href="./glossary.html">Glossary</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+    <div id="homepage-hero">
+        <h1>
+            <span style="font-size: 5.5em;font-weight: bold;">I'm Lukas</span><br><br>
+            <span style="font-size: 4em">and I build <em>great teams</em> who build <em>great software</em>.</span></h1>
+        <div>
+            <p>I'm a software developer mostly focussed on mobile, especially the Apple platforms.</p>
+            <p>This is my personal website. It's the place where I collect and share my thoughts, so the contents are
+                mostly about software engineering and computer programming, but might also touch some other niche topics
+                I'm
+                interested in.
+            </p>
+            <p>I was very lucky to start my career during the height of personal websites where everyone shared their
+                ideas,
+                lessons learnt, and generally cool stuff. That's what I want to continue and revive with this
+                website. However, most of it is in a format interesting for me, so that I can recollect my thoughts. I'm
+                sharing because some things might be interesting for someone else. </p>
+        </div>
+    </div>
+</main>
+<footer>
+    <ul>
+        <li>Sitemap</li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+</body>
+</html>

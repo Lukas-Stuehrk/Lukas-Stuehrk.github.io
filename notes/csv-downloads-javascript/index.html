@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This explains what the article is actually doing">
+    <link rel="stylesheet" href="../../css/main.css">
+    <title>Creating CSV downloads with JavaScript</title>
+</head>
+<body>
+<header>
+    <a href="#content" class="skip-link">Skip to Content</a>
+    <nav>
+        <ul>
+            <li>
+                <a href="../../" id="logo"><img src="../../wood.svg" alt="Lukas Stührk" title="Go to home page"></a>
+            </li>
+            <li>
+                <a href="../">Notes</a>
+            </li>
+            <li>
+                <a href="../../about.html">About</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main id="content">
+    <h1>Creating <abbr title="Comma-Separated Values, a file format to store tabular data">CSV</abbr> downloads with
+        JavaScript</h1>
+    <aside><p><strong>Published</strong>: June 29, 2025.</p>
+        <p><strong>Keywords:</strong> HTML, JavaScript, CSV</p>
+    </aside>
+    <div>
+        <p><abbr title="Comma-Separated Values, a file format to store tabular data">CSV</abbr> files are a super useful
+            tool for exporting data.
+            They are a simple text-based format, and therefore easy to create, and are well-supported by a variety of tools,
+            including Microsoft Excel.
+            One use case that turned out to be particularly useful for me is to use CSV files when I
+            export data from web apps with <a href="https://en.wikipedia.org/wiki/Bookmarklet"
+                                              title="The Wikipedia page that explains bookmarklets.">bookmarklets</a>.</p>
+
+        <p>To be able to export such data, I need to be able to create a downloadable CSV file with JavaScript and without
+            backend support.</p>
+        <h2 id="data-url">Building Block One: Data URLs <a href="#data-url" title="Link to this section"></a></h2>
+        <p>The basic idea is pretty straightforward.
+            You can use a
+            <a href="https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data"
+               title="The page that explains data URLs on the Mozilla Developer Network">data URL</a> to create the CSV
+            file.
+            A Data URL is a special type of URL that allows embedding small files or data directly into a link itself.
+            So you can build a data URL that looks like <code>data:text/csv,</code> followed by the contents of the
+            CSV file.
+        </p>
+
+        <p>The contents of the CSV file are very easy to create. CSV files are one record per line (so each table row is a
+            new line in the file). And the records are simply the fields separated by a delimiter.</p>
+
+        <p>So let's assume that we store the data in a two-dimensional array: It's an array of rows, and every row
+            contains another array that stores the fields of that row. Then a naive implementation of creating the file
+            contents looks like this:
+        </p>
+
+        <div class="code">
+            <div class="header">
+                <dl>
+                    <dt class="visually-hidden">Code language:</dt>
+                    <dd>JavaScript</dd>
+                </dl>
+                <ul role="menu">
+                    <li role="menuitem">
+                        <button>Copy to clipboard</button>
+                    </li>
+                </ul>
+            </div>
+            <code class="language-javascript hljs"><pre>const csv = data.map(row => row.join(";")).join("\n");</pre></code>
+        </div>
+
+        <p>And because we are adding the file contents to a data URL, we need to make sure that the created string with the
+            file contents doesn't contain any characters that are not allowed in URls. Wrapping it in
+            <code>encodeURIComponent()</code> should do the job.</p>
+
+        <aside class="excursus" id="exc-edge-cases">
+            <p>Did I mention before that CSV is a simple file format? Sorry, I was blatantly lying. There are
+                plenty of edge cases when generating CSV files, and I recommend always using a dedicated library instead of
+                simply concatenating text. Not later than when you are reading CSV files, you should definitely use a
+                library proven in practice.</p>
+            <p>One example: In the code snippet above, I'm using semicolons (<code>;</code>) for the delimiter between
+                fields. This is the delimiter used in Europe. In english-speaking countries, usually a comma (<code>,</code>)
+                is used. But space and tabs are also valid delimiter.</p>
+        </aside>
+
+        <p>You can add such a data URL in the <code>href</code> attribute of an <code>a</code> element and you are almost
+            done. But if you do so, you'll notice that the downloaded file will have a very weird filename such
+            as <code>Nr26vr5U.csv</code> or<code>WZ9i2bwG.csv</code>.</p>
+
+        <h2 id="download-attribute">Building Block Two: Links with <code>download</code> attribute <a
+                href="#download-attribute" title="Link to this section"></a></h2>
+        <p>To create a nice filename for the downloaded file, you need the second building block: The
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download"
+               title="The page that explains the download attribute on the Mozilla Developer Network">download attribute</a>.
+            It's
+            supported in <em>every</em> browser. If you set an <strong>a</strong>
+            element's <code>download</code> attribute with the contents of the desired filename, then the downloaded file
+            will have this filename.</p>
+
+        <h2 id="microsoft-bom">Microsoft Tools need the <abbr title="Byte Order Mark">BOM</abbr> for Unicode support <a
+                href="#microsoft-bom"></a></h2>
+
+        <p>After building all of this, you can finally enjoy downloading your beautiful CSV files that have nice filenames.
+            But as soon as you open the downloaded files with Excel, you are up to the next surprise. Although you encoded
+            all your data perfectly fine, and even if you put the charset information in the resulting file, Excel will
+            display rubbish as soon as you include characters outside of ASCII in your CSV file.
+        </p>
+
+        <p>As it turns out, a lot of Microsoft Software including Excel needs a magic Unicode character to understand that
+            a file has UTF-8 contents. It's called the
+            <a href="https://en.wikipedia.org/wiki/Byte_order_mark"
+               title="The page that explains the Byte Order Mark on Wikipedia"><abbr title="Byte Order Mark">byte order mark
+                or
+                BOM</abbr></a>.
+            If you put it at the beginning of the CSV file, Excel will understand that the file contains contents outside
+            the ASCII range and will display all characters correctly.
+        </p>
+
+        <h2 id="full-solution">The full solution <a href="#full-solution" title="Link to this section"></a></h2>
+        <p>Please note that the code for creating the raw file is not doing any escaping. This only works if you are in
+            control of the data, so you can ensure that the contents don't contain any data that needs escaping. Escaping
+            CSV data is a hard problem, and I strongly suggest that you choose an existing library that is proven in practice
+            to create a CSV file.</p>
+        <code-highlighter>
+            <figure>
+                <code></code>
+                <a href="csv-downloads.js" title="Download the example JavaScript code" download="">Download</a>
+            </figure>
+        </code-highlighter>
+    </div>
+    <script src="../../js/code.js" async></script>
+</main>
+<footer>
+    <ul>
+        <li>Sitemap</li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+</body>
+</html>

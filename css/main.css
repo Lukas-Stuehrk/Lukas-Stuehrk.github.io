@@ -1,0 +1,37 @@
+@import "_reset.css";
+@import "_colors.css";
+@import "_fonts.css";
+@import "_layout.css";
+@import "_codelisting.css";
+@import "_listing.css";
+
+.skip-link {
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+    padding: 1em;
+    background-color: var(--amber);
+    color: var(--amber-contrast);
+    font-weight: bold;
+    z-index: 999;
+
+    &:not(:focus) {
+        padding: 0;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+    }
+}
+
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+abbr[title] {
+    text-decoration: underline dashed;
+    cursor: help;
+}
