@@ -168,6 +168,9 @@ body > header > nav > ul {
   align-items: center;
   font-size: 1.5rem;
   font-family: var(--font-antique);
+  @media (max-width: 800px) {
+    font-size: min(1.5rem, 4.5vw);
+  }
   & li + li {
     margin-left: var(--space-1);
   }
