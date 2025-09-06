@@ -38,6 +38,7 @@ await Promise.all([
     'lukas.jpeg',
     'wood.svg',
     'js/code.js',
+    'robots.txt',
 ].map(sourceFile => buildEnvironment.copyFile(sourceFile)))
 
 await buildStylesheets(['css/main.css'], buildEnvironment);
