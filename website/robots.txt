@@ -4,7 +4,7 @@ Disallow: /impressum.html
 User-agent: *
 Allow: /
 
-Sitemap: https://lukas.stuehrk.net/sitemap.xml
+Sitemap: https://lukas.ehlers.stuehrk.net/sitemap.xml
 
 # Exclude AI Spiders
 
