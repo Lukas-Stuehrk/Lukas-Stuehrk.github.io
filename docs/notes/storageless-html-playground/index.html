@@ -37,12 +37,12 @@
         coolest feature is that they have shareable <abbr title="Uniform Resource Locator,  the address of a website or another ressource on the internet">URLs</abbr>.
     </p>
     <p>And recently I experimented a lot with little tools that are static websites. They are handy because they are
-        super easy to deploy, and easy to maintain. And there are plenty of options to host static websites, so you can
+        super easy to deploy and easy to maintain. And there are plenty of options to host static websites, so you can
         provide them at nearly no cost or even for free.</p>
     <h2 id="the-problem">The problem: Storage</h2>
     <p>However, static websites come with one big disadvantage. They don’t have any possibility to store data.</p>
     <p>Static website hosting usually doesn’t provide a way to run server-side software or to use a database, so you
-        can’t store user-created content, which is the key requirement to have sharable URls for an HTML playground.</p>
+        can’t store user-created content, which is the key requirement to have sharable URLs for an HTML playground.</p>
     <p>Or is it?</p>
     <h2 id="the-idea">The idea: Brotli</h2>
     <p><a href="https://en.wikipedia.org/wiki/Brotli">Brotli</a> is a lossless data compression algorithm that is great
@@ -63,7 +63,7 @@
         fragment. I chose the fragment because this provides one interesting side effect: The actual contents of the
         playground are never sent to the server that hosts the website! They never leave your browser!</p>
     <h2 id="disadvantages">Disadvantages</h2>
-    <p>However, this comes with one big disadvantage: you cannot change the playground’s contents once that you’ve shared its URLs
+    <p>However, this comes with one big disadvantage: you cannot change the playground’s contents once you’ve shared its URLs
         with someone else. So if you accidentally included some sensitive data in the playground, there’s no way to
         remove it anymore.</p>
 </div>

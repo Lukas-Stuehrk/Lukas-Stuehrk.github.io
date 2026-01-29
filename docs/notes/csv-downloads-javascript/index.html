@@ -77,7 +77,7 @@
         
 
     <p>And because we are adding the file contents to a data URL, we need to make sure that the created string with the
-        file contents doesn’t contain any characters that are not allowed in URls. Wrapping it in
+        file contents doesn’t contain any characters that are not allowed in URLs. Wrapping it in
         <code>encodeURIComponent()</code> should do the job.</p>
 
     <aside class="excursus" id="exc-edge-cases">
@@ -86,8 +86,8 @@
             simply concatenating text. Not later than when you are reading CSV files, you should definitely use a
             library proven in practice.</p>
         <p>One example: In the code snippet above, I’m using semicolons (<code>;</code>) for the delimiter between
-            fields. This is the delimiter used in Europe. In english-speaking countries, usually a comma (<code>,</code>)
-            is used. But space and tabs are also valid delimiter.</p>
+            fields. This is the delimiter used in Europe. In English-speaking countries, usually a comma (<code>,</code>)
+            is used. But space and tabs are also valid delimiters.</p>
     </aside>
 
     <p>You can add such a data URL in the <code>href</code> attribute of an <code>a</code> element and you are almost
@@ -110,7 +110,7 @@
         display rubbish as soon as you include characters outside of ASCII in your CSV file.
     </p>
 
-    <p>As it turns out, a lot of Microsoft Software including Excel needs a magic Unicode character to understand that
+    <p>As it turns out, a lot of Microsoft Software, including Excel, needs a magic Unicode character to understand that
         a file has UTF-8 contents. It’s called the
         <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="The page that explains the Byte Order Mark on Wikipedia">byte order mark
             or
