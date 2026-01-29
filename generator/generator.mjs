@@ -7,6 +7,7 @@ import path from "path";
 import {createCodeListing, createCodeListingForFile, highlightCode} from "./_codeHiglighting.mjs";
 import {transformKeywords} from "./_keywords.mjs";
 import {createSitemap} from "./_sitemap.mjs";
+import {niceQuotes} from "./_niceQuotes.mjs";
 
 const buildEnvironment = new BuildEnvironment();
 
@@ -31,6 +32,9 @@ await Promise.all([
     for (const style of jsdom.window.document.querySelectorAll('style')) {
         style.innerHTML = await transformCss(style.innerHTML);
     }
+
+    niceQuotes(jsdom.window);
+
     await buildEnvironment.writeFile(sourceFile, jsdom.serialize());
 }));
 
@@ -104,6 +108,8 @@ for (const filePath of await getHtmlFiles(buildEnvironment.sourcePath('notes/'))
         meta += `<p><strong>Keywords: </strong>${await transformKeywords(keywords.content) }</p>`;
     }
     template.window.document.querySelector('main>aside').innerHTML = meta;
+
+    niceQuotes(template.window);
 
     const newRelativePath = path.join(path.dirname(buildEnvironment.relativePath(filePath)), 'index.html');
     await buildEnvironment.writeFile(newRelativePath, template.serialize());

@@ -54,7 +54,7 @@
     <p>The contents of the CSV file are very easy to create. CSV files are one record per line (so each table row is a
         new line in the file). And the records are simply the fields separated by a delimiter.</p>
 
-    <p>So let's assume that we store the data in a two-dimensional array: It's an array of rows, and every row
+    <p>So let’s assume that we store the data in a two-dimensional array: It’s an array of rows, and every row
         contains another array that stores the fields of that row. Then a naive implementation of creating the file
         contents looks like this:
     </p>
@@ -77,7 +77,7 @@
         
 
     <p>And because we are adding the file contents to a data URL, we need to make sure that the created string with the
-        file contents doesn't contain any characters that are not allowed in URls. Wrapping it in
+        file contents doesn’t contain any characters that are not allowed in URls. Wrapping it in
         <code>encodeURIComponent()</code> should do the job.</p>
 
     <aside class="excursus" id="exc-edge-cases">
@@ -85,21 +85,21 @@
             plenty of edge cases when generating CSV files, and I recommend always using a dedicated library instead of
             simply concatenating text. Not later than when you are reading CSV files, you should definitely use a
             library proven in practice.</p>
-        <p>One example: In the code snippet above, I'm using semicolons (<code>;</code>) for the delimiter between
+        <p>One example: In the code snippet above, I’m using semicolons (<code>;</code>) for the delimiter between
             fields. This is the delimiter used in Europe. In english-speaking countries, usually a comma (<code>,</code>)
             is used. But space and tabs are also valid delimiter.</p>
     </aside>
 
     <p>You can add such a data URL in the <code>href</code> attribute of an <code>a</code> element and you are almost
-        done. But if you do so, you'll notice that the downloaded file will have a very weird filename such
+        done. But if you do so, you’ll notice that the downloaded file will have a very weird filename such
         as <code>Nr26vr5U.csv</code> or <code>WZ9i2bwG.csv</code>.</p>
 
     <h2 id="download-attribute">Building Block Two: Links with <code>download</code> attribute <a href="#download-attribute" title="Link to this section"></a></h2>
     <p>To create a nice filename for the downloaded file, you need the second building block: The
         <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download" title="The page that explains the download attribute on the Mozilla Developer Network">download attribute</a>.
-        It's
+        It’s
         supported in <em>every</em> browser. If you set an <code>a</code>
-        element's <code>download</code> attribute with the contents of the desired filename, then the downloaded file
+        element’s <code>download</code> attribute with the contents of the desired filename, then the downloaded file
         will have this filename.</p>
 
     <h2 id="microsoft-bom">Microsoft Tools need the <abbr title="Byte Order Mark">BOM</abbr> for Unicode support <a href="#microsoft-bom"></a></h2>
@@ -111,7 +111,7 @@
     </p>
 
     <p>As it turns out, a lot of Microsoft Software including Excel needs a magic Unicode character to understand that
-        a file has UTF-8 contents. It's called the
+        a file has UTF-8 contents. It’s called the
         <a href="https://en.wikipedia.org/wiki/Byte_order_mark" title="The page that explains the Byte Order Mark on Wikipedia">byte order mark
             or
             <abbr title="Byte Order Mark">BOM</abbr></a>.
@@ -121,7 +121,7 @@
 
     <h2 id="full-solution">The full solution</h2>
     <p>Please note that the code for creating the raw file is not doing any escaping. This only works if you are in
-        control of the data, so you can ensure that the contents don't contain any data that needs escaping. Escaping
+        control of the data, so you can ensure that the contents don’t contain any data that needs escaping. Escaping
         CSV data is a hard problem, and I strongly suggest that you choose an existing library that is proven in
         practice
         to create a CSV file.</p>
