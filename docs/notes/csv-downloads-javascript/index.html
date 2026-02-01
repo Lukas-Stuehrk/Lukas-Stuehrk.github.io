@@ -72,7 +72,7 @@
                         </li>
                     </ul>
                 </div>
-                <pre><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);</pre>
+                <pre><code><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);</code></pre>
         </div>
         
 
@@ -138,14 +138,14 @@
                         </li>
                     </ul>
                 </div>
-                <pre><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);
+                <pre><code><span class="hljs-keyword">const</span> csv = data.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">row</span> =&gt;</span> row.<span class="hljs-title function_">join</span>(<span class="hljs-string">";"</span>)).<span class="hljs-title function_">join</span>(<span class="hljs-string">"\n"</span>);
 <span class="hljs-keyword">const</span> csvFile = <span class="hljs-string">"data:text/csv;charset=utf-8,\uFEFF"</span> + <span class="hljs-built_in">encodeURIComponent</span>(csv);
 <span class="hljs-keyword">const</span> link = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">"a"</span>);
 link.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">"href"</span>, csvFile);
 link.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">"download"</span>, <span class="hljs-string">"data.csv"</span>);
 <span class="hljs-variable language_">document</span>.<span class="hljs-property">body</span>.<span class="hljs-title function_">appendChild</span>(link);
 link.<span class="hljs-title function_">remove</span>();
-</pre>
+</code></pre>
         </div>
         
 

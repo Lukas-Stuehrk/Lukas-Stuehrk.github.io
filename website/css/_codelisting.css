@@ -17,7 +17,7 @@
         }
     }
 
-    pre,code {
+    pre {
         padding: var(--space-1);
         font-family: var(--font-monospace-code);
         overflow: auto;

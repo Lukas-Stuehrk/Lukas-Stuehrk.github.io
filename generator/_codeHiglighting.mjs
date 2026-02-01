@@ -42,7 +42,7 @@ function replaceCodeElement(codeElement, language, highlightedContents) {
                         </li>
                     </ul>
                 </div>
-                <pre>${highlightedContents}</pre>
+                <pre><code>${highlightedContents}</code></pre>
         </div>
         `;
 }
