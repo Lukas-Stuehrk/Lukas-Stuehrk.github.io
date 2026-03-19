@@ -7,6 +7,7 @@ import path from "path";
 import {createCodeListing, createCodeListingForFile, highlightCode} from "./_codeHiglighting.mjs";
 import {transformKeywords} from "./_keywords.mjs";
 import {createSitemap} from "./_sitemap.mjs";
+import {createRssFeed} from "./_rss.mjs";
 import {niceQuotes} from "./_niceQuotes.mjs";
 
 const buildEnvironment = new BuildEnvironment();
@@ -92,9 +93,16 @@ for (const filePath of await getHtmlFiles(buildEnvironment.sourcePath('notes/'))
     replaceElement('meta[name=description]', 'meta[name="description"]');
 
     const published = document.window.document.querySelector('.dt-published');
+    if (!published) {
+        throw new Error(`Missing .dt-published element in ${filePath}`);
+    }
+    const title = document.window.document.querySelector('title').textContent;
+    const description = document.window.document.querySelector('meta[name="description"]')?.content ?? '';
     let pageEntry = {
         relativePath:  path.join(path.dirname(buildEnvironment.relativePath(filePath)), '/'),
         lastModified: published.getAttribute('datetime'),
+        title,
+        description,
     };
     pages.push(pageEntry);
     let meta = `<p><strong>Published: </strong>${published.outerHTML}</p>`;
@@ -119,4 +127,5 @@ for (const path of await getHtmlFiles(buildEnvironment.outDirectory)) {
     await runHtmlValidator(path);
 }
 
-buildEnvironment.writeFile('sitemap.xml', createSitemap(pages));
+await buildEnvironment.writeFile('sitemap.xml', createSitemap(pages));
+await buildEnvironment.writeFile('feed.xml', createRssFeed(pages));

@@ -71,7 +71,7 @@ export class BuildEnvironment {
 }
 
 export function createContext(rootDirectory) {
-    const baseUrl = 'https://lukas.stuehrk.net/';
+    const baseUrl = 'https://lukas.ehlers.stuehrk.net/';
 
     class Page {
         /** @type {string} */

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Lukas Ehlers Stührk's Personal Website</title>
+        <link>https://lukas.ehlers.stuehrk.net/</link>
+        <description>Notes on web development</description>
+        <language>en</language>
+        <lastBuildDate>Sun, 29 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <atom:link href="https://lukas.ehlers.stuehrk.net/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Creating CSV downloads with JavaScript</title>
+            <link>https://lukas.ehlers.stuehrk.net/notes/csv-downloads-javascript/</link>
+            <guid>https://lukas.ehlers.stuehrk.net/notes/csv-downloads-javascript/</guid>
+            <pubDate>Sun, 29 Jun 2025 00:00:00 GMT</pubDate>
+            <description>How to create a downloadable CSV file from JavaScript. This is handy when building small tools or bookmarklets.</description>
+        </item>
+        <item>
+            <title>Experimenting with an HTML playground that doesn&apos;t have any storage</title>
+            <link>https://lukas.ehlers.stuehrk.net/notes/storageless-html-playground/</link>
+            <guid>https://lukas.ehlers.stuehrk.net/notes/storageless-html-playground/</guid>
+            <pubDate>Sun, 29 Jun 2025 00:00:00 GMT</pubDate>
+            <description>I built an HTML playground that doesn&apos;t store any data, yet it has shareable URLs.</description>
+        </item>
+    </channel>
+</rss>
