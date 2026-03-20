@@ -1,12 +1,14 @@
 {
+  "name": "ehlster-website",
+  "version": "0.0.1",
   "scripts": {
     "build": "node --experimental-vm-modules generator/generator.mjs",
     "watch": "node --experimental-vm-modules generator/watch.mjs",
     "check": "node generator/generator.mjs"
   },
   "dependencies": {
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.27.4",
     "highlight.js": "^11.11.1",
-    "jsdom": "^26.1.0"
+    "jsdom": "^29.0.1"
   }
 }
